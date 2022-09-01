@@ -6,6 +6,8 @@ cd "$DIR"
 dotnet build dataprotection-repro.sln
 
 test_string="This is a test message"
+echo "Protecting: '$test_string'"
+
 echo "*** Protecting with .NET 6.0 ... ***"
 protected_string="$(dotnet run --project ./ReproApp --framework net6.0 -- protect "$test_string")"
 echo "Protected string: $protected_string"
