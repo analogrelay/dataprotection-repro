@@ -1,9 +1,22 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.DataProtection.Infrastructure;
+
+var builder = WebHost.CreateDefaultBuilder()
+    .UseStartup<Startup>();
 var app = builder.Build();
 
-var env = app.Services.GetRequiredService<IHostEnvironment>();
-Console.WriteLine($"The Content Root is: {env.ContentRootPath}");
-
-app.MapGet("/", () => "Hello World!");
-
 app.Run();
+
+
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddDataProtection();
+    }
+    
+    public void Configure(IApplicationDiscriminator discriminator)
+    {
+        Console.WriteLine("App Discriminator: " + discriminator.Discriminator);
+    }
+}
